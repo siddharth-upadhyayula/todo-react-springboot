@@ -4,6 +4,9 @@ export default function LoginComponent() {
     
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
+
 
     function handleUsername(event) {
         console.log(event.target.value)
@@ -14,6 +17,18 @@ export default function LoginComponent() {
         console.log(event.target.value)
         setPassword(event.target.value)
     }
+
+    function handleSubmit(event) {
+        if(username==='dummy' && password==='dummy'){
+        console.log('Success')
+        setShowSuccessMessage(true)
+        setShowErrorMessage(false)
+    } else {
+        console.log('Failed')
+        setShowSuccessMessage(false)
+        setShowErrorMessage(true)
+    }
+}
 
     return(
         <div className="Login">
@@ -27,9 +42,10 @@ export default function LoginComponent() {
                 <input type="password" name="password" value={password} onChange={handlePassword}/>
             </div>
             <div>
-                <button type="button" name="login">login</button>
+                <button type="button" name="login" onChange={handleSubmit}>login</button>
             </div>
           </div>
         </div>
     )
+    
 }
