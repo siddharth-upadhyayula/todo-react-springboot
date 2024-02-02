@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { BrowserRouter, Route, Routes, useNavigate, useParams } from "react-router-dom"
+import { BrowserRouter, Route, Routes, useNavigate, useParams, Link } from "react-router-dom"
 
 export default function TodoApp() {
     return (
@@ -79,6 +79,9 @@ function WelcomeComponent() {
     return (
         <div className="WelcomeComponent">
             <h1>Welcome {username}</h1>
+            <div>
+                Go to your todos - <Link to = '/todos'>Click here</Link>
+            </div>
         </div>
     )  
 }
@@ -95,7 +98,17 @@ function ErrorComponent() {
 }
 
 function ListTodosComponent() {
-    const todos = {id:1, description: 'Learn AWS'}
+
+    const today = new Date()
+
+    const targetDate = new Date(today.getFullYear()+15, today.getMonth(), today.getDay()) 
+    
+    const todos = [
+        {id:1, description: 'Learn AWS', done: false, targetDate: targetDate},
+        {id:2, description: 'Learn Azure', done: false, targetDate: targetDate},
+        {id:3, description: 'Learn DevOps', done: false, targetDate: targetDate}
+    ]
+
     return (
         <div className="ListTodosComponent">
             <h1>Things you want to do!</h1>
@@ -103,18 +116,46 @@ function ListTodosComponent() {
                 <table>
                     <thead>
                         <tr>
-                            <td>id</td>
-                            <td>description</td>
+                            <td>ID</td>
+                            <td>Description</td>
+                            <td>Is Done?</td>
+                            <td>Target Date</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>{todos.id}</td>
-                            <td>{todos.description}</td>
-                        </tr>
+                    {
+                        todos.map(
+                            todo => (
+                                <tr key={todo.id}>
+                                    <td>{todo.id}</td>
+                                    <td>{todo.description} </td>
+                                    <td>{todo.done.toString()}</td>
+                                    <td>{todo.targetDate.toDateString()}</td>
+                                </tr>
+                            )
+
+                        )
+                    }
                     </tbody>
+                    
                 </table>
             </div>
+        </div>
+    )
+}
+
+function HeaderComponent() {
+    return (
+        <div className="header">
+            Header <hr/>
+        </div>
+    )
+}
+
+function FooterComponent() {
+    return (
+        <div className="footer">
+            <hr/> Footer 
         </div>
     )
 }
